@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameMaster : MonoBehaviour
 {
 
-    public GameObject timer;
-    private Timer timerScript;
+    public GameObject smolTimer;
+    private SmolTimer smolTimerScript;
 
     public GameObject[] ask;
     public GameObject dos;
@@ -26,43 +26,32 @@ public class GameMaster : MonoBehaviour
     public GameObject loseScreen;
     public GameObject timeoutScreen;
 
-    private bool servePressed;
+    private bool timeouted;
 
     private void Awake()
     {
-        timerScript = timer.GetComponent<Timer>();
+        smolTimerScript = smolTimer.GetComponent<SmolTimer>();
     }
 
     void Start()
     {
-        servePressed = false;
-        StartCoroutine(Ask());
+        Ask();
     }
 
-    /*
-     * 0  = red
-     * 1  = red green
-     * 2  = red purple
-     * 3  = red yellow
-     * 4  = red green purple
-     * 5  = red green yellow
-     * 6  = red purple yellow
-     * 7  = blue
-     * 8  = blue green
-     * 9  = blue purple
-     * 10 = blue yellow
-     * 11 = blue green purple
-     * 12 = blue green yellow
-     * 13 = blue purple yellow
-     */
+    public void Update()
+    {
+        if (smolTimerScript.timerFill.fillAmount <= 0.001f && !timeouted)
+        {
+            EvalServe(2);
+            timeouted = true;
+        }
+    }
 
-    IEnumerator Ask()
+    public void Ask()
     {
         randomNum = Random.Range(0, ask.Length);
         currentAsk = ask[randomNum];
         currentAsk.SetActive(true);
-        yield return new WaitForSeconds(timerScript.time);
-        if (!servePressed) EvalServe(2);
     }
 
     IEnumerator AfterServe()
@@ -72,7 +61,7 @@ public class GameMaster : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
         Time.timeScale = 1;
         ResetValues();
-        StartCoroutine(Ask());
+        Ask();
     }
 
     public void ResetValues()
@@ -89,19 +78,33 @@ public class GameMaster : MonoBehaviour
 
         winScreen.SetActive(false);
         loseScreen.SetActive(false);
-        timerScript.timerFill.fillAmount = 1f;
+        timeoutScreen.SetActive(false);
+        smolTimerScript.timerFill.fillAmount = 1f;
 
-        servePressed = false;
+        timeouted = false;
 
         dos.SetActive(true);
     }
 
+ /* Serve guide
+ * 0  = red
+ * 1  = red green
+ * 2  = red purple
+ * 3  = red yellow
+ * 4  = red green purple
+ * 5  = red green yellow
+ * 6  = red purple yellow
+ * 7  = blue
+ * 8  = blue green
+ * 9  = blue purple
+ * 10 = blue yellow
+ * 11 = blue green purple
+ * 12 = blue green yellow
+ * 13 = blue purple yellow
+ */
 
     public void Serve()
     {
-
-        servePressed = true;
-
         if (randomNum == 0)
         {
             if (redOn && !blueOn && !greenOn && !purpleOn && !yellowOn) EvalServe(1);

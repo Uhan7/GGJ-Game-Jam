@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5426afc61470478c9305918b7ce95ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: {fileID: 72669689}
+  smolTimer: {fileID: 72669689}
   ask:
   - {fileID: 1503282677}
   - {fileID: 1010393344}
@@ -171,6 +171,7 @@ MonoBehaviour:
   dos: {fileID: 1700500058}
   winScreen: {fileID: 1144267627}
   loseScreen: {fileID: 1352340389}
+  timeoutScreen: {fileID: 814460524}
 --- !u!4 &41183058
 Transform:
   m_ObjectHideFlags: 0
@@ -306,7 +307,7 @@ GameObject:
   - component: {fileID: 72669691}
   - component: {fileID: 72669693}
   m_Layer: 5
-  m_Name: Timer
+  m_Name: Smol Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
