@@ -303,7 +303,6 @@ public class GameMaster : MonoBehaviour
         }
         else
         {
-            gameIsPaused = false;
 
             pauseScreen.SetActive(false);
 
@@ -319,6 +318,8 @@ public class GameMaster : MonoBehaviour
             currentAsk.SetActive(true);
 
             Time.timeScale = 1;
+
+            gameIsPaused = false;
         }
     }
 
