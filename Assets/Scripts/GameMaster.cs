@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
@@ -11,8 +12,14 @@ public class GameMaster : MonoBehaviour
     public GameObject dayTimer;
     private DayTimer dayTimerScript;
 
+    public GameObject scoreTracker;
+    private ScoreTracker scoreTrackerScript;
+
     public GameObject[] ask;
     public GameObject dos;
+
+    public Button pauseButton;
+    public Button[] doButtons;
 
     private GameObject currentAsk;
 
@@ -28,6 +35,7 @@ public class GameMaster : MonoBehaviour
     public GameObject winScreen;
     public GameObject loseScreen;
     public GameObject timeoutScreen;
+    public GameObject pauseScreen;
 
     public GameObject[] dayDoneScreen;
 
@@ -35,10 +43,13 @@ public class GameMaster : MonoBehaviour
 
     private bool dayDone;
 
+    public static bool gameIsPaused;
+
     private void Awake()
     {
         smolTimerScript = smolTimer.GetComponent<SmolTimer>();
         dayTimerScript = dayTimer.GetComponent<DayTimer>();
+        scoreTrackerScript = scoreTracker.GetComponent<ScoreTracker>();
     }
 
     void Start()
@@ -48,7 +59,7 @@ public class GameMaster : MonoBehaviour
 
     public void Update()
     {
-        if (smolTimerScript.timerFill.fillAmount <= 0.001f && !timeouted)
+        if (smolTimerScript.timerFill.fillAmount <= 0 && !timeouted)
         {
             EvalServe(2);
             timeouted = true;
@@ -69,15 +80,6 @@ public class GameMaster : MonoBehaviour
         currentAsk.SetActive(true);
     }
 
-    IEnumerator AfterServe()
-    {
-        dos.SetActive(false);
-        Time.timeScale = 0;
-        yield return new WaitForSecondsRealtime(1f);
-        Time.timeScale = 1;
-        ResetValues();
-        Ask();
-    }
 
     public void ResetValues()
     {
@@ -98,7 +100,10 @@ public class GameMaster : MonoBehaviour
 
         timeouted = false;
 
-        dos.SetActive(true);
+        foreach (var button in doButtons)
+        {
+            button.interactable = true;
+        }
     }
 
  /* Serve guide
@@ -235,6 +240,8 @@ public class GameMaster : MonoBehaviour
             winScreen.SetActive(true);
             loseScreen.SetActive(false);
             timeoutScreen.SetActive(false);
+
+            scoreTrackerScript.peopleServedToday++;
         }
         else
         {
@@ -243,6 +250,20 @@ public class GameMaster : MonoBehaviour
             timeoutScreen.SetActive(true);
         }
         StartCoroutine(AfterServe());
+    }
+
+    IEnumerator AfterServe()
+    {
+        foreach (var button in doButtons)
+        {
+            button.interactable = false;
+        }
+
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(1f);
+        if (!gameIsPaused) Time.timeScale = 1;
+        ResetValues();
+        Ask();
     }
 
     IEnumerator DayDone()
@@ -254,6 +275,51 @@ public class GameMaster : MonoBehaviour
             yield return new WaitForSecondsRealtime(1f);
         }
         Debug.Log("Day's done yey");
+    }
+
+    public void Wrapper(string coroutineName)
+    {
+        StartCoroutine(coroutineName);
+    }
+
+    IEnumerator PauseGame()
+    {
+        if (!gameIsPaused)
+        {
+            gameIsPaused = true;
+
+            pauseScreen.SetActive(true);
+
+            yield return null;
+
+            foreach (var button in doButtons)
+            {
+                button.interactable = false;
+            }
+
+            currentAsk.SetActive(false);
+
+            Time.timeScale = 0;
+        }
+        else
+        {
+            gameIsPaused = false;
+
+            pauseScreen.SetActive(false);
+
+            pauseButton.interactable = false;
+            yield return new WaitForSecondsRealtime(1);
+            pauseButton.interactable = true;
+
+            foreach (var button in doButtons)
+            {
+                button.interactable = true;
+            }
+
+            currentAsk.SetActive(true);
+
+            Time.timeScale = 1;
+        }
     }
 
 }
