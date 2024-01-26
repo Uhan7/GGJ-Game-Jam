@@ -8,6 +8,9 @@ public class GameMaster : MonoBehaviour
     public GameObject smolTimer;
     private SmolTimer smolTimerScript;
 
+    public GameObject dayTimer;
+    private DayTimer dayTimerScript;
+
     public GameObject[] ask;
     public GameObject dos;
 
@@ -26,11 +29,16 @@ public class GameMaster : MonoBehaviour
     public GameObject loseScreen;
     public GameObject timeoutScreen;
 
+    public GameObject[] dayDoneScreen;
+
     private bool timeouted;
+
+    private bool dayDone;
 
     private void Awake()
     {
         smolTimerScript = smolTimer.GetComponent<SmolTimer>();
+        dayTimerScript = dayTimer.GetComponent<DayTimer>();
     }
 
     void Start()
@@ -44,6 +52,13 @@ public class GameMaster : MonoBehaviour
         {
             EvalServe(2);
             timeouted = true;
+        }
+
+        if (dayTimerScript.timerFill.fillAmount <= 0 && !dayDone)
+        {
+            StopAllCoroutines();
+            StartCoroutine(DayDone());
+            dayDone = true;
         }
     }
 
@@ -228,6 +243,17 @@ public class GameMaster : MonoBehaviour
             timeoutScreen.SetActive(true);
         }
         StartCoroutine(AfterServe());
+    }
+
+    IEnumerator DayDone()
+    {
+        Time.timeScale = 0;
+        foreach (var thing in dayDoneScreen)
+        {
+            thing.SetActive(true);
+            yield return new WaitForSecondsRealtime(1f);
+        }
+        Debug.Log("Day's done yey");
     }
 
 }

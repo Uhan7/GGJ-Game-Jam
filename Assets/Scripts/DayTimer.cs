@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SmolTimer : MonoBehaviour
+public class DayTimer : MonoBehaviour
 {
 
     public Image timerFill;
-    public float time;
+    public float dayTime;
 
     void Update()
     {
-        timerFill.fillAmount -= Time.deltaTime / time;
+        timerFill.fillAmount -= Time.unscaledDeltaTime / dayTime;
     }
 }
