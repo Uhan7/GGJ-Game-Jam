@@ -39,6 +39,8 @@ public class GameMaster : MonoBehaviour
 
     public GameObject[] dayDoneScreen;
 
+    public GameObject startScreen;
+
     private bool timeouted;
 
     private bool dayDone;
@@ -54,6 +56,15 @@ public class GameMaster : MonoBehaviour
 
     void Start()
     {
+        gameIsPaused = true;
+        Time.timeScale = 0;
+    }
+
+    public void StartGame()
+    {
+        gameIsPaused = false;
+        startScreen.SetActive(false);
+        Time.timeScale = 1;
         Ask();
     }
 
