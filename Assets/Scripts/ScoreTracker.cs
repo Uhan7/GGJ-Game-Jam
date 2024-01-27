@@ -11,6 +11,7 @@ public class ScoreTracker : MonoBehaviour
     private string dayRating;
 
     public TextMeshProUGUI peopleServedTodayText;
+    public TextMeshProUGUI peopleServedTodayText1;
     public TextMeshProUGUI dayRatingText;
 
     public int threeStarMin;
@@ -24,6 +25,8 @@ public class ScoreTracker : MonoBehaviour
 
     public void Update()
     {
+        peopleServedTodayText1.text = peopleServedToday.ToString();
+
         peopleServedTodayText.text = "You made " + peopleServedToday.ToString() + " people laugh today!";
         dayRatingText.text = dayRating;
         if (peopleServedToday >= threeStarMin) dayRating = "YOU'RE SO FUNNY !!!\n3/3";

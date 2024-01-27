@@ -25,9 +25,11 @@ public class GameMaster : MonoBehaviour
     public Button pauseButton;
     public Button[] doButtons;
 
-    private GameObject currentAsk;
-
     private int randomNum;
+    private int randomNum1;
+
+    private GameObject currentAsk;
+    private GameObject currentPerson;
 
     private bool redOn;
     private bool blueOn;
@@ -35,6 +37,10 @@ public class GameMaster : MonoBehaviour
     private bool greenOn;
     private bool purpleOn;
     private bool yellowOn;
+
+    public GameObject[] people;
+
+    public static int orderSatisfied;
 
     public GameObject winScreen;
     public GameObject loseScreen;
@@ -66,6 +72,8 @@ public class GameMaster : MonoBehaviour
         gameIsPaused = true;
         Time.timeScale = 0;
         StartCoroutine(StartScene());
+
+        orderSatisfied = 2;
     }
 
     IEnumerator StartScene()
@@ -112,8 +120,13 @@ public class GameMaster : MonoBehaviour
     public void Ask()
     {
         randomNum = Random.Range(0, ask.Length);
+        randomNum1 = Random.Range(0, people.Length);
+
         currentAsk = ask[randomNum];
         currentAsk.SetActive(true);
+
+        currentPerson = people[randomNum1];
+        currentPerson.SetActive(true);
     }
 
 
@@ -133,6 +146,10 @@ public class GameMaster : MonoBehaviour
         loseScreen.SetActive(false);
         timeoutScreen.SetActive(false);
         smolTimerScript.timerFill.fillAmount = 1f;
+
+        orderSatisfied = 2;
+
+        currentPerson.SetActive(false);
 
         timeouted = false;
 
@@ -239,23 +256,28 @@ public class GameMaster : MonoBehaviour
         switch (num)
         {
             case 0:
-                redOn = true;
+                if (!redOn) redOn = true;
+            //    else redOn = false;
                 break;
 
             case 1:
-                blueOn = true;
+                if (!blueOn) blueOn = true;
+            //    else blueOn = false;
                 break;
 
             case 2:
-                greenOn = true;
+                if (!greenOn) greenOn = true;
+            //    else greenOn = false;
                 break;
 
             case 3:
-                purpleOn = true;
+                if (!purpleOn) purpleOn = true;
+            //    else purpleOn = false;
                 break;
 
             case 4:
-                yellowOn = true;
+                if (!yellowOn) yellowOn = true;
+            //    else yellowOn = false;
                 break;
 
             default:
@@ -267,6 +289,8 @@ public class GameMaster : MonoBehaviour
     {
         if (result == 0)
         {
+            orderSatisfied = 0;
+
             winScreen.SetActive(false);
             loseScreen.SetActive(true);
             timeoutScreen.SetActive(false);
@@ -275,6 +299,8 @@ public class GameMaster : MonoBehaviour
         }
         else if (result == 1)
         {
+            orderSatisfied = 1;
+
             winScreen.SetActive(true);
             loseScreen.SetActive(false);
             timeoutScreen.SetActive(false);
@@ -283,6 +309,8 @@ public class GameMaster : MonoBehaviour
         }
         else
         {
+            orderSatisfied = 0;
+
             winScreen.SetActive(false);
             loseScreen.SetActive(false);
             timeoutScreen.SetActive(true);
