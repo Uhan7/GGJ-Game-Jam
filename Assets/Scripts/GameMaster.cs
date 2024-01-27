@@ -27,6 +27,7 @@ public class GameMaster : MonoBehaviour
 
     private int randomNum;
     private int randomNum1;
+    private int randomNum2;
 
     private GameObject currentAsk;
     private GameObject currentPerson;
@@ -119,14 +120,32 @@ public class GameMaster : MonoBehaviour
 
     public void Ask()
     {
-        randomNum = Random.Range(0, ask.Length);
+        randomNum = Random.Range(0, ask.Length-1);
         randomNum1 = Random.Range(0, people.Length);
+        randomNum2 = Random.Range(0, 9);
+
+        if (randomNum2 == 0)
+        {
+            StartCoroutine(ChangeAsk());
+        }
 
         currentAsk = ask[randomNum];
         currentAsk.SetActive(true);
 
         currentPerson = people[randomNum1];
         currentPerson.SetActive(true);
+    }
+
+    IEnumerator ChangeAsk()
+    {
+        yield return new WaitForSeconds(Random.Range(1f, 2f));
+        currentAsk.SetActive(false);
+        currentAsk = ask[ask.Length-1];
+        currentAsk.SetActive(true);
+        orderSatisfied = 2;
+        yield return new WaitForSeconds(1f);
+        ResetValues();
+        Ask();
     }
 
 
