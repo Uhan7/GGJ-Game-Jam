@@ -151,7 +151,7 @@ public class GameMaster : MonoBehaviour
 
     IEnumerator ChangeAsk()
     {
-        yield return new WaitForSeconds(Random.Range(1f, 2.5f));
+        yield return new WaitForSeconds(Random.Range(1.5f, 2.5f));
         foreach (var button in doButtons)
         {
             button.interactable = false;
