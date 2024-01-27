@@ -16,6 +16,9 @@ public class GameMaster : MonoBehaviour
     public GameObject scoreTracker;
     private ScoreTracker scoreTrackerScript;
 
+    public GameObject hearts;
+    private Hearts heartsScript;
+
     public GameObject[] ask;
     public GameObject dos;
 
@@ -39,6 +42,7 @@ public class GameMaster : MonoBehaviour
     public GameObject pauseScreen;
 
     public GameObject[] dayDoneScreen;
+    public GameObject[] dayLoseScreen;
 
     public GameObject startScreen;
     public TextMeshProUGUI startScreenText;
@@ -54,6 +58,7 @@ public class GameMaster : MonoBehaviour
         smolTimerScript = smolTimer.GetComponent<SmolTimer>();
         dayTimerScript = dayTimer.GetComponent<DayTimer>();
         scoreTrackerScript = scoreTracker.GetComponent<ScoreTracker>();
+        heartsScript = hearts.GetComponent<Hearts>();
     }
 
     void Start()
@@ -260,7 +265,7 @@ public class GameMaster : MonoBehaviour
             loseScreen.SetActive(true);
             timeoutScreen.SetActive(false);
 
-            scoreTrackerScript.health--;
+            heartsScript.health--;
         }
         else if (result == 1)
         {
@@ -275,6 +280,8 @@ public class GameMaster : MonoBehaviour
             winScreen.SetActive(false);
             loseScreen.SetActive(false);
             timeoutScreen.SetActive(true);
+
+            heartsScript.health--;
         }
         StartCoroutine(AfterServe());
     }
@@ -289,9 +296,9 @@ public class GameMaster : MonoBehaviour
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(1f);
 
-        if (scoreTrackerScript.health <= 0)
+        if (heartsScript.health <= 0)
         {
-            DayDone();
+            StartCoroutine(DayLose());
         }
 
         if (!gameIsPaused) Time.timeScale = 1;
@@ -301,13 +308,27 @@ public class GameMaster : MonoBehaviour
 
     IEnumerator DayDone()
     {
+        dayTimerScript.timerFill.fillAmount = 0;
+        smolTimerScript.timerFill.fillAmount = 0;
         Time.timeScale = 0;
         foreach (var thing in dayDoneScreen)
         {
             thing.SetActive(true);
             yield return new WaitForSecondsRealtime(1f);
         }
-        StopAllCoroutines()
+    }
+
+    IEnumerator DayLose()
+    {
+        dayTimerScript.timerFill.fillAmount = 0;
+        smolTimerScript.timerFill.fillAmount = 0;
+        Debug.Log("printed");
+        Time.timeScale = 0;
+        foreach (var thing in dayLoseScreen)
+        {
+            thing.SetActive(true);
+            yield return new WaitForSecondsRealtime(1f);
+        }
     }
 
     public void Wrapper(string coroutineName)

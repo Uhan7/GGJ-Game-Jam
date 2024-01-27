@@ -17,8 +17,6 @@ public class ScoreTracker : MonoBehaviour
     public int twoStarMin;
     public int oneStarMin;
 
-    public int health;
-
     public void Start()
     {
         peopleServedToday = 0;
