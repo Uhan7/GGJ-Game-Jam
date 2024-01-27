@@ -11,6 +11,6 @@ public class DayTimer : MonoBehaviour
 
     void Update()
     {
-        if (!GameMaster.gameIsPaused) timerFill.fillAmount -= Time.unscaledDeltaTime / dayTime;
+        if (!GameMaster.gameIsPaused && !GameMaster.dayDone) timerFill.fillAmount -= Time.unscaledDeltaTime / dayTime;
     }
 }

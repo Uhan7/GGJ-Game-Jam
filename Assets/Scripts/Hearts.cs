@@ -10,9 +10,10 @@ public class Hearts : MonoBehaviour
 
     public int health;
 
-    public Sprite heart3;
-    public Sprite heart2;
-    public Sprite heart1;
+    public Sprite heartis3;
+    public Sprite heartis2;
+    public Sprite heartis1;
+    public Sprite heartis0;
 
     private void Awake()
     {
@@ -24,15 +25,19 @@ public class Hearts : MonoBehaviour
         switch (health)
         {
             case 3:
-                img.sprite = heart3;
+                img.sprite = heartis3;
                 break;
 
             case 2:
-                img.sprite = heart2;
+                img.sprite = heartis2;
                 break;
 
             case 1:
-                img.sprite = heart1;
+                img.sprite = heartis1;
+                break;
+
+            case 0:
+                img.sprite = heartis0;
                 break;
 
             default:

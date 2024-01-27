@@ -49,7 +49,7 @@ public class GameMaster : MonoBehaviour
 
     private bool timeouted;
 
-    private bool dayDone;
+    public static bool dayDone;
 
     public static bool gameIsPaused;
 
@@ -100,6 +100,12 @@ public class GameMaster : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(DayDone());
             dayDone = true;
+        }
+
+        if (dayDone)
+        {
+            pauseButton.interactable = false;
+            pauseScreen.SetActive(false);
         }
     }
 
@@ -300,16 +306,17 @@ public class GameMaster : MonoBehaviour
         {
             StartCoroutine(DayLose());
         }
-
-        if (!gameIsPaused) Time.timeScale = 1;
-        ResetValues();
-        Ask();
+        if (!dayDone)
+        {
+            if (!gameIsPaused) Time.timeScale = 1;
+            ResetValues();
+            Ask();
+        }
     }
 
     IEnumerator DayDone()
     {
-        dayTimerScript.timerFill.fillAmount = 0;
-        smolTimerScript.timerFill.fillAmount = 0;
+        dayDone = true;
         Time.timeScale = 0;
         foreach (var thing in dayDoneScreen)
         {
@@ -320,8 +327,7 @@ public class GameMaster : MonoBehaviour
 
     IEnumerator DayLose()
     {
-        dayTimerScript.timerFill.fillAmount = 0;
-        smolTimerScript.timerFill.fillAmount = 0;
+        dayDone = true;
         Debug.Log("printed");
         Time.timeScale = 0;
         foreach (var thing in dayLoseScreen)
