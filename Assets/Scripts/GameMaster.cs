@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameMaster : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class GameMaster : MonoBehaviour
     public GameObject[] dayDoneScreen;
 
     public GameObject startScreen;
+    public TextMeshProUGUI startScreenText;
 
     private bool timeouted;
 
@@ -58,13 +60,25 @@ public class GameMaster : MonoBehaviour
     {
         gameIsPaused = true;
         Time.timeScale = 0;
+        StartCoroutine(StartScene());
     }
 
-    public void StartGame()
+    IEnumerator StartScene()
     {
-        gameIsPaused = false;
+        yield return new WaitForSecondsRealtime(1f);
+        startScreenText.text = "Funny Store is Ready for Orders!";
+        yield return new WaitForSecondsRealtime(2f);
+        startScreenText.text = "Ready";
+        yield return new WaitForSecondsRealtime(.5f);
+        startScreenText.text = "Set";
+        yield return new WaitForSecondsRealtime(.5f);
+        startScreenText.text = "SERVE!";
+        yield return new WaitForSecondsRealtime(.5f);
+
         startScreen.SetActive(false);
+        gameIsPaused = false;
         Time.timeScale = 1;
+
         Ask();
     }
 
@@ -245,6 +259,8 @@ public class GameMaster : MonoBehaviour
             winScreen.SetActive(false);
             loseScreen.SetActive(true);
             timeoutScreen.SetActive(false);
+
+            scoreTrackerScript.health--;
         }
         else if (result == 1)
         {
@@ -272,6 +288,12 @@ public class GameMaster : MonoBehaviour
 
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(1f);
+
+        if (scoreTrackerScript.health <= 0)
+        {
+            DayDone();
+        }
+
         if (!gameIsPaused) Time.timeScale = 1;
         ResetValues();
         Ask();
@@ -285,7 +307,7 @@ public class GameMaster : MonoBehaviour
             thing.SetActive(true);
             yield return new WaitForSecondsRealtime(1f);
         }
-        Debug.Log("Day's done yey");
+        StopAllCoroutines()
     }
 
     public void Wrapper(string coroutineName)

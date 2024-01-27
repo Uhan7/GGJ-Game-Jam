@@ -6,9 +6,17 @@ public class DestroyAfter : MonoBehaviour
 {
 
     public float time;
+    public bool unscaledTime;
 
     private void Start()
     {
-        Destroy(gameObject, time);
+        StartCoroutine(Destroy(gameObject, time));
+    }
+
+    IEnumerator Destroy(GameObject obj, float time)
+    {
+        if (unscaledTime) yield return new WaitForSecondsRealtime(time);
+        else yield return new WaitForSeconds(time);
+        Destroy(obj);
     }
 }
