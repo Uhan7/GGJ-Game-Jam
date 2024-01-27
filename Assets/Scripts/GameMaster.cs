@@ -7,6 +7,8 @@ using TMPro;
 public class GameMaster : MonoBehaviour
 {
 
+    private AudioSource aSource;
+
     public GameObject smolTimer;
     private SmolTimer smolTimerScript;
 
@@ -24,6 +26,16 @@ public class GameMaster : MonoBehaviour
 
     public Button pauseButton;
     public Button[] doButtons;
+
+    public Sprite image1;
+    public Sprite image2;
+
+    public AudioClip sfx1;
+    public AudioClip sfx2;
+    public AudioClip sfx3;
+
+    public GameObject currentFunny;
+    public bool currentFunnySwitched;
 
     private int randomNum;
     private int randomNum1;
@@ -62,6 +74,7 @@ public class GameMaster : MonoBehaviour
 
     private void Awake()
     {
+        aSource = GetComponent<AudioSource>();
         smolTimerScript = smolTimer.GetComponent<SmolTimer>();
         dayTimerScript = dayTimer.GetComponent<DayTimer>();
         scoreTrackerScript = scoreTracker.GetComponent<ScoreTracker>();
@@ -273,7 +286,7 @@ public class GameMaster : MonoBehaviour
             if (!redOn && blueOn && !greenOn && purpleOn && yellowOn) EvalServe(1);
             else EvalServe(0);
         }
-
+        ShowFunny();
     }
 
     public void Activate(int num)
@@ -343,6 +356,21 @@ public class GameMaster : MonoBehaviour
             heartsScript.health--;
         }
         StartCoroutine(AfterServe());
+    }
+
+    public void ShowFunny()
+    {
+        if (!currentFunnySwitched) currentFunnySwitched = true;
+        else currentFunnySwitched = false;
+
+        currentFunny.GetComponent<Animator>().SetBool("Switched", currentFunnySwitched);
+
+        if (redOn && !blueOn) currentFunny.GetComponent<Image>().sprite = image1;
+        else if (blueOn && !redOn) currentFunny.GetComponent<Image>().sprite = image2;
+
+        if (greenOn) aSource.PlayOneShot(sfx1);
+        if (purpleOn) aSource.PlayOneShot(sfx2);
+        if (yellowOn) aSource.PlayOneShot(sfx3);
     }
 
     IEnumerator AfterServe()
