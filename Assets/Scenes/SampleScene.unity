@@ -944,9 +944,9 @@ MonoBehaviour:
   peopleServedToday: 0
   peopleServedTodayText: {fileID: 1879209974}
   dayRatingText: {fileID: 403286978}
-  threeStarMin: 18
-  twoStarMin: 11
-  oneStarMin: 5
+  threeStarMin: 57
+  twoStarMin: 35
+  oneStarMin: 16
 --- !u!4 &447482504
 Transform:
   m_ObjectHideFlags: 0
@@ -1811,7 +1811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerFill: {fileID: 2024948837}
-  dayTime: 60
+  dayTime: 180
 --- !u!1 &808834562
 GameObject:
   m_ObjectHideFlags: 0
