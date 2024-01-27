@@ -10,6 +10,7 @@ public class Hearts : MonoBehaviour
 
     public int health;
 
+    public Sprite heartis4;
     public Sprite heartis3;
     public Sprite heartis2;
     public Sprite heartis1;
@@ -24,6 +25,9 @@ public class Hearts : MonoBehaviour
     {
         switch (health)
         {
+            case 4:
+                img.sprite = heartis4;
+                break;
             case 3:
                 img.sprite = heartis3;
                 break;

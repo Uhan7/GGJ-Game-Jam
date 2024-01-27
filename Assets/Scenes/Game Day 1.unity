@@ -2035,7 +2035,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26231344193394c98aa3c693832be425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 4
+  heartis4: {fileID: 21300000, guid: 95d6e25d5c8b84e90b32f01cad8c409c, type: 3}
   heartis3: {fileID: 21300000, guid: f5c255c7adde948ee96df7d0b2974094, type: 3}
   heartis2: {fileID: 21300000, guid: d00b050c8bdc643efb498df1438e2764, type: 3}
   heartis1: {fileID: 21300000, guid: 0e1cbedd5a1704833bd67f209ce847bc, type: 3}
