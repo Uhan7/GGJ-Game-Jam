@@ -122,7 +122,7 @@ public class GameMaster : MonoBehaviour
     {
         randomNum = Random.Range(0, ask.Length-1);
         randomNum1 = Random.Range(0, people.Length);
-        randomNum2 = Random.Range(0, 9);
+        randomNum2 = Random.Range(0, 8);
 
         if (randomNum2 == 0)
         {
@@ -138,12 +138,18 @@ public class GameMaster : MonoBehaviour
 
     IEnumerator ChangeAsk()
     {
-        yield return new WaitForSeconds(Random.Range(1f, 2f));
+        yield return new WaitForSeconds(Random.Range(1f, 2.5f));
+        foreach (var button in doButtons)
+        {
+            button.interactable = false;
+        }
         currentAsk.SetActive(false);
         currentAsk = ask[ask.Length-1];
         currentAsk.SetActive(true);
-        orderSatisfied = 2;
-        yield return new WaitForSeconds(1f);
+        orderSatisfied = 0;
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(1f);
+        Time.timeScale = 1;
         ResetValues();
         Ask();
     }

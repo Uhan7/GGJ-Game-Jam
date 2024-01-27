@@ -1155,9 +1155,9 @@ MonoBehaviour:
   peopleServedTodayText: {fileID: 1879209974}
   peopleServedTodayText1: {fileID: 1869243034}
   dayRatingText: {fileID: 403286978}
-  threeStarMin: 28
-  twoStarMin: 23
-  oneStarMin: 18
+  threeStarMin: 24
+  twoStarMin: 20
+  oneStarMin: 16
 --- !u!4 &447482504
 Transform:
   m_ObjectHideFlags: 0
