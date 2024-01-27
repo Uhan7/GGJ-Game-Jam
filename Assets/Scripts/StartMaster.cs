@@ -19,7 +19,7 @@ public class StartMaster : MonoBehaviour
     {
         loadingScreen.SetActive(true);
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Game Day 1");
     }
 
     public void Credits()

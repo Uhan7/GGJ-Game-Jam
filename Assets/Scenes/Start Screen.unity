@@ -1491,5 +1491,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Loading Screen In
       objectReference: {fileID: 0}
+    - target: {fileID: 3172815771865327779, guid: 7ddff1206cfc9497a95c6b7ebd3b75ec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ddff1206cfc9497a95c6b7ebd3b75ec, type: 3}

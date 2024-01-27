@@ -31,12 +31,12 @@ public class GameMaster : MonoBehaviour
     private GameObject currentAsk;
     private GameObject currentPerson;
 
-    private bool redOn;
-    private bool blueOn;
+    public static bool redOn;
+    public static bool blueOn;
 
-    private bool greenOn;
-    private bool purpleOn;
-    private bool yellowOn;
+    public static bool greenOn;
+    public static bool purpleOn;
+    public static bool yellowOn;
 
     public GameObject[] people;
 
@@ -257,27 +257,27 @@ public class GameMaster : MonoBehaviour
         {
             case 0:
                 if (!redOn) redOn = true;
-            //    else redOn = false;
+                else redOn = false;
                 break;
 
             case 1:
                 if (!blueOn) blueOn = true;
-            //    else blueOn = false;
+                else blueOn = false;
                 break;
 
             case 2:
                 if (!greenOn) greenOn = true;
-            //    else greenOn = false;
+                else greenOn = false;
                 break;
 
             case 3:
                 if (!purpleOn) purpleOn = true;
-            //    else purpleOn = false;
+                else purpleOn = false;
                 break;
 
             case 4:
                 if (!yellowOn) yellowOn = true;
-            //    else yellowOn = false;
+                else yellowOn = false;
                 break;
 
             default:
