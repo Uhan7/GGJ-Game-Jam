@@ -14,6 +14,10 @@ public class ScoreTracker : MonoBehaviour
     public TextMeshProUGUI peopleServedTodayText1;
     public TextMeshProUGUI dayRatingText;
 
+    public GameObject dayDoneScreen;
+
+    public Sprite[] dayDoneStars;
+
     public int threeStarMin;
     public int twoStarMin;
     public int oneStarMin;
@@ -29,9 +33,19 @@ public class ScoreTracker : MonoBehaviour
 
         peopleServedTodayText.text = "You made " + peopleServedToday.ToString() + " people laugh today!";
         dayRatingText.text = dayRating;
-        if (peopleServedToday >= threeStarMin) dayRating = "YOU'RE SO FUNNY !!!\n3/3";
-        else if (peopleServedToday >= twoStarMin) dayRating = "Not too bad, you're pretty funny!\n2/3";
-        else if (peopleServedToday >= oneStarMin) dayRating = "Funny, but could use some work!\n1/3";
+        if (peopleServedToday >= threeStarMin)
+        {
+            dayRating = "YOU'RE SO FUNNY !!!\n3/3";
+            dayDoneScreen.GetComponent<Image>().sprite = dayDoneStars[2];
+        }
+        else if (peopleServedToday >= twoStarMin) {
+            dayRating = "Not too bad, you're pretty funny!\n2/3";
+            dayDoneScreen.GetComponent<Image>().sprite = dayDoneStars[1];
+        }
+        else if (peopleServedToday >= oneStarMin) {
+            dayRating = "Funny, but could use some work!\n1/3";
+            dayDoneScreen.GetComponent<Image>().sprite = dayDoneStars[0];
+        }
         else dayRating = "Okay.. Let's take some comedy classes.";
     }
 
