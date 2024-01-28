@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class ScoreTracker : MonoBehaviour
@@ -22,9 +23,12 @@ public class ScoreTracker : MonoBehaviour
     public int twoStarMin;
     public int oneStarMin;
 
+    public bool canGetHighscore;
+
     public void Start()
     {
         peopleServedToday = 0;
+        canGetHighscore = false;
     }
 
     public void Update()
@@ -47,6 +51,37 @@ public class ScoreTracker : MonoBehaviour
             dayDoneScreen.GetComponent<Image>().sprite = dayDoneStars[0];
         }
         else dayRating = "Okay.. Let's take some comedy classes.";
+
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Game Day 1":
+                if (peopleServedToday > PlayerPrefs.GetInt("HighscoreDay1", 0))
+                {
+                    PlayerPrefs.SetInt("HighscoreDay1", peopleServedToday);
+                }
+                break;
+
+            case "Game Day 2":
+                if (peopleServedToday > PlayerPrefs.GetInt("HighscoreDay2", 0))
+                {
+                    PlayerPrefs.SetInt("HighscoreDay2", peopleServedToday);
+                }
+                break;
+
+            case "Game Day 3":
+
+                if (peopleServedToday > PlayerPrefs.GetInt("HighscoreDay3", 0))
+                {
+                    PlayerPrefs.SetInt("HighscoreDay3", peopleServedToday);
+                }
+                break;
+
+            default:
+                break;
+        }
+        print(peopleServedToday);
+        print("Highscore: " + PlayerPrefs.GetInt("HighscoreDay1", 0).ToString());
+        canGetHighscore = false;
     }
 
 }

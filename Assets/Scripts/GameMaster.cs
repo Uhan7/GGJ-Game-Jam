@@ -154,7 +154,7 @@ public class GameMaster : MonoBehaviour
     {
         randomNum = Random.Range(0, ask.Length-1);
         randomNum1 = Random.Range(0, people.Length);
-        randomNum2 = Random.Range(0, 8);
+        randomNum2 = Random.Range(0, 10);
 
         if (randomNum2 == 0)
         {
@@ -469,11 +469,12 @@ public class GameMaster : MonoBehaviour
     IEnumerator DayDone()
     {
         dayDone = true;
+        scoreTrackerScript.canGetHighscore = true;
         Time.timeScale = 0;
         foreach (var thing in dayDoneScreen)
         {
-            thing.SetActive(true);
             yield return new WaitForSecondsRealtime(1f);
+            thing.SetActive(true);
         }
     }
 

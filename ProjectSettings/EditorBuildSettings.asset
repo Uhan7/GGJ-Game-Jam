@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Day 1.unity
     guid: 048feb9f3f58048afae74122ec6b0282
+  - enabled: 1
+    path: Assets/Scenes/Game Day 2.unity
+    guid: 13cdbf7cde2d84c1ebab8fea51b41d9a
+  - enabled: 1
+    path: Assets/Scenes/Game Day 3.unity
+    guid: 00fee9b347b0b40f88aed1b9586589ab
   m_configObjects: {}
