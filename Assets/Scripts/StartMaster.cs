@@ -29,9 +29,9 @@ public class StartMaster : MonoBehaviour
 
     private void Start()
     {
-        day1Highscore.text = "Highscore: " + (PlayerPrefs.GetInt("HighscoreDay1", 0)-1).ToString();
-        day2Highscore.text = "Highscore: " + (PlayerPrefs.GetInt("HighscoreDay2", 0)-1).ToString();
-        day3Highscore.text = "Highscore: " + (PlayerPrefs.GetInt("HighscoreDay3", 0)-1).ToString();
+        day1Highscore.text = "Highscore: " + PlayerPrefs.GetInt("HighscoreDay1", 0).ToString();
+        day2Highscore.text = "Highscore: " + PlayerPrefs.GetInt("HighscoreDay2", 0).ToString();
+        day3Highscore.text = "Highscore: " + PlayerPrefs.GetInt("HighscoreDay3", 0).ToString();
 
         i = 0;
     }
