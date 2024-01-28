@@ -18,7 +18,7 @@ public class StartMaster : MonoBehaviour
     IEnumerator StartGame()
     {
         loadingScreen.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
         SceneManager.LoadScene("Game Day 1");
     }
 

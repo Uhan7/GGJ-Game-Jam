@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameMaster : MonoBehaviour
@@ -71,6 +72,8 @@ public class GameMaster : MonoBehaviour
     public GameObject startScreen;
     public TextMeshProUGUI startScreenText;
 
+    public GameObject loadingScreenIn;
+
     private bool timeouted;
 
     public static bool dayDone;
@@ -88,6 +91,16 @@ public class GameMaster : MonoBehaviour
 
     void Start()
     {
+        redOn = false;
+        blueOn = false;
+        greenOn = false;
+        purpleOn = false;
+        yellowOn = false;
+
+        orderSatisfied = 2;
+
+        dayDone = false;
+
         gameIsPaused = true;
         Time.timeScale = 0;
         StartCoroutine(StartScene());
@@ -125,7 +138,8 @@ public class GameMaster : MonoBehaviour
         if (dayTimerScript.timerFill.fillAmount <= 0 && !dayDone)
         {
             StopAllCoroutines();
-            StartCoroutine(DayDone());
+            if (scoreTrackerScript.peopleServedToday >= scoreTrackerScript.oneStarMin) StartCoroutine(DayDone());
+            else StartCoroutine(DayLose());
             dayDone = true;
         }
 
@@ -519,6 +533,20 @@ public class GameMaster : MonoBehaviour
 
             gameIsPaused = false;
         }
+    }
+
+    IEnumerator RestartScene()
+    {
+        loadingScreenIn.SetActive(true);
+        yield return new WaitForSecondsRealtime(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    IEnumerator GoHome()
+    {
+        loadingScreenIn.SetActive(true);
+        yield return new WaitForSecondsRealtime(1f);
+        SceneManager.LoadScene("Start Screen");
     }
 
 }
