@@ -21,6 +21,7 @@ public class GameMaster : MonoBehaviour
     public GameObject hearts;
     private Hearts heartsScript;
 
+    public GameObject speechBubble;
     public GameObject[] ask;
     public GameObject dos;
 
@@ -34,6 +35,8 @@ public class GameMaster : MonoBehaviour
     public AudioClip sfx2;
     public AudioClip sfx3;
 
+    public AudioClip dingBellSFX;
+
     public GameObject currentFunny;
     public bool currentFunnySwitched;
 
@@ -43,6 +46,8 @@ public class GameMaster : MonoBehaviour
 
     private GameObject currentAsk;
     private GameObject currentPerson;
+
+    public AudioClip[] laughs;
 
     public static bool redOn;
     public static bool blueOn;
@@ -142,6 +147,8 @@ public class GameMaster : MonoBehaviour
             StartCoroutine(ChangeAsk());
         }
 
+        speechBubble.SetActive(true);
+
         currentAsk = ask[randomNum];
         currentAsk.SetActive(true);
 
@@ -151,7 +158,7 @@ public class GameMaster : MonoBehaviour
 
     IEnumerator ChangeAsk()
     {
-        yield return new WaitForSeconds(Random.Range(1.5f, 2.5f));
+        yield return new WaitForSeconds(Random.Range(2f, 3f));
         foreach (var button in doButtons)
         {
             button.interactable = false;
@@ -162,6 +169,7 @@ public class GameMaster : MonoBehaviour
         orderSatisfied = 0;
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(1f);
+        speechBubble.SetActive(false);
         Time.timeScale = 1;
         ResetValues();
         Ask();
@@ -216,6 +224,9 @@ public class GameMaster : MonoBehaviour
 
     public void Serve()
     {
+
+        aSource.PlayOneShot(dingBellSFX);
+
         if (randomNum == 0)
         {
             if (redOn && !blueOn && !greenOn && !purpleOn && !yellowOn) EvalServe(1);
@@ -286,7 +297,6 @@ public class GameMaster : MonoBehaviour
             if (!redOn && blueOn && !greenOn && purpleOn && yellowOn) EvalServe(1);
             else EvalServe(0);
         }
-        ShowFunny();
     }
 
     public void Activate(int num)
@@ -355,6 +365,8 @@ public class GameMaster : MonoBehaviour
 
             heartsScript.health--;
         }
+        if (orderSatisfied == 1) ShowFunny();
+        speechBubble.SetActive(false);
         StartCoroutine(AfterServe());
     }
 
@@ -375,13 +387,58 @@ public class GameMaster : MonoBehaviour
 
     IEnumerator AfterServe()
     {
+
+        switch (orderSatisfied)
+        {
+            case 0:
+
+            case 2:
+                aSource.PlayOneShot(laughs[0]);
+                break;
+
+            case 1:
+                switch (currentPerson.name)
+                {
+                    case "Female Child":
+                        aSource.PlayOneShot(laughs[1]);
+                        break;
+
+                    case "Female Teen":
+                        aSource.PlayOneShot(laughs[2]);
+                        break;
+
+                    case "Female Adult":
+                        aSource.PlayOneShot(laughs[3]);
+                        break;
+
+                    case "Male Child":
+                        aSource.PlayOneShot(laughs[4]);
+                        break;
+
+                    case "Male Teen":
+                        aSource.PlayOneShot(laughs[5]);
+                        break;
+
+                    case "Male Adult":
+                        aSource.PlayOneShot(laughs[6]);
+                        break;
+
+                    default:
+                        break;
+                }
+                break;
+
+            default:
+                break;
+        }
+
         foreach (var button in doButtons)
         {
             button.interactable = false;
         }
 
         Time.timeScale = 0;
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(2f);
 
         if (heartsScript.health <= 0)
         {
