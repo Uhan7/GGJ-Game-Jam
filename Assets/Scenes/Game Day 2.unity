@@ -1903,6 +1903,7 @@ MonoBehaviour:
   threeStarMin: 15
   twoStarMin: 12
   oneStarMin: 9
+  canGetHighscore: 0
 --- !u!4 &447482504
 Transform:
   m_ObjectHideFlags: 0
@@ -3914,7 +3915,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a53c0b376928f41ab803034b19ba68be, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5087b6baa022743f4abe3cae290f9c0f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
