@@ -79,8 +79,6 @@ public class ScoreTracker : MonoBehaviour
             default:
                 break;
         }
-        print(peopleServedToday);
-        print("Highscore: " + PlayerPrefs.GetInt("HighscoreDay1", 0).ToString());
         canGetHighscore = false;
     }
 

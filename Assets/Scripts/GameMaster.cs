@@ -154,7 +154,7 @@ public class GameMaster : MonoBehaviour
     {
         randomNum = Random.Range(0, ask.Length-1);
         randomNum1 = Random.Range(0, people.Length);
-        randomNum2 = Random.Range(0, 10);
+        randomNum2 = Random.Range(0, 2);
 
         if (randomNum2 == 0)
         {
@@ -172,6 +172,7 @@ public class GameMaster : MonoBehaviour
 
     IEnumerator ChangeAsk()
     {
+        print("Changing Quyestion");
         yield return new WaitForSeconds(Random.Range(2f, 3f));
         foreach (var button in doButtons)
         {
@@ -217,6 +218,7 @@ public class GameMaster : MonoBehaviour
         {
             button.interactable = true;
         }
+        Time.timeScale = 1;
     }
 
  /* Serve guide
@@ -460,7 +462,6 @@ public class GameMaster : MonoBehaviour
         }
         if (!dayDone)
         {
-            if (!gameIsPaused) Time.timeScale = 1;
             ResetValues();
             Ask();
         }
