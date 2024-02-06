@@ -124,7 +124,7 @@ public class GameMaster : MonoBehaviour
         gameIsPaused = false;
         Time.timeScale = 1;
 
-        Ask();
+        Ask(false);
     }
 
     public void Update()
@@ -150,7 +150,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    public void Ask()
+    public void Ask(bool sameChara)
     {
         randomNum = Random.Range(0, ask.Length-1);
         randomNum1 = Random.Range(0, people.Length);
@@ -166,8 +166,8 @@ public class GameMaster : MonoBehaviour
         currentAsk = ask[randomNum];
         currentAsk.SetActive(true);
 
-        currentPerson = people[randomNum1];
-        currentPerson.SetActive(true);
+        if (!sameChara) currentPerson = people[randomNum1];
+        if (!sameChara) currentPerson.SetActive(true);
     }
 
     IEnumerator ChangeAsk()
@@ -179,19 +179,19 @@ public class GameMaster : MonoBehaviour
             button.interactable = false;
         }
         currentAsk.SetActive(false);
-        currentAsk = ask[ask.Length-1];
+        currentAsk = ask[ask.Length - 1];
         currentAsk.SetActive(true);
-        orderSatisfied = 0;
+        //orderSatisfied = 0;
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(1f);
         speechBubble.SetActive(false);
         Time.timeScale = 1;
-        ResetValues();
-        Ask();
+        ResetValues(true);
+            Ask(true);
     }
 
 
-    public void ResetValues()
+    public void ResetValues(bool sameChara)
     {
         foreach (var q in ask)
         {
@@ -208,9 +208,10 @@ public class GameMaster : MonoBehaviour
         timeoutScreen.SetActive(false);
         smolTimerScript.timerFill.fillAmount = 1f;
 
-        orderSatisfied = 2;
+        if (!sameChara) orderSatisfied = 2;
 
-        currentPerson.SetActive(false);
+
+        if (!sameChara) currentPerson.SetActive(false);
 
         timeouted = false;
 
@@ -462,8 +463,8 @@ public class GameMaster : MonoBehaviour
         }
         if (!dayDone)
         {
-            ResetValues();
-            Ask();
+            ResetValues(false);
+            Ask(false);
         }
     }
 
