@@ -154,11 +154,11 @@ public class GameMaster : MonoBehaviour
     {
         randomNum = Random.Range(0, ask.Length-1);
         randomNum1 = Random.Range(0, people.Length);
-        randomNum2 = Random.Range(0, 2);
+        randomNum2 = Random.Range(0, 10);
 
         if (randomNum2 == 0)
         {
-            StartCoroutine(ChangeAsk());
+            StartCoroutine("ChangeAsk");
         }
 
         speechBubble.SetActive(true);
@@ -181,13 +181,12 @@ public class GameMaster : MonoBehaviour
         currentAsk.SetActive(false);
         currentAsk = ask[ask.Length - 1];
         currentAsk.SetActive(true);
-        //orderSatisfied = 0;
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(1f);
         speechBubble.SetActive(false);
         Time.timeScale = 1;
         ResetValues(true);
-            Ask(true);
+        Ask(true);
     }
 
 
@@ -243,6 +242,7 @@ public class GameMaster : MonoBehaviour
     {
 
         aSource.PlayOneShot(dingBellSFX);
+        StopCoroutine("ChangeAsk");
 
         if (randomNum == 0)
         {
